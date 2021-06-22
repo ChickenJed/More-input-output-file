@@ -1,2 +1,89 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+#include <iostream>
+#include <fstream>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+	// how to write out to a file
+	ofstream outfile;                       //outfile object
+
+	string filename;
+	cout << "\nEnter a valid file name to write: ";
+	cin >> filename;
+
+
+	outfile.open("output.dat", ios::app);  // open the file object to write, if file exists then append
+
+	srand(time(0));                        // random seed
+	for (int c = 1; c <= rand(); c++)         // loop to write 100 integers to the file
+		outfile << c << " " << rand() * 0.01 << '\n';         // or outfile<< rand() << ' ';
+
+	outfile.close();                       // close the object file
+
+	// How to read form a file
+	ifstream infile;
+
+	cout << "\nEnter a valid file name to read: ";
+	cin >> filename;
+	infile.open(filename);
+
+	infile.open("output.dat");
+
+	if (infile.fail())                     // validate file exists
+	{
+		cout << "ERROR : file, " << filename << ", does not exists.\n";
+		exit(1);                          // terminate the program
+	}
+
+	double sum = 0.0;
+
+	//for (int c = 1; c <= 100, c++)// obsolete or invalid
+
+	int index = 0;
+
+	while (!infile.eof())
+	{
+		int index = 0;
+		int number = 0;
+		infile >> index >> number;   //read and assign read values to variables
+		if (infile.eof())
+			break;
+		cout << index << " " << number << '\n'; // display the indexes and numbers
+		sum += number;                     // calculate the sum of alll numbers
+	}
+
+	infile.close();
+
+	cout << "\nAverage = " << sum / index << '\n'; // calculate the average
+
+	cout << "\nEnter a valid file name to read: ";
+	cin >> filename;
+	infile.open(filename);                    // open the file object to read
+
+	infile.open("output.dat");
+
+	if (infile.fail())                     // validate file exists
+	{
+		cout << "ERROR : file, " << filename << ", does not exists.\n";
+		exit(1);                          // terminate the program
+	}
+
+	// display a character
+	while (!infile.eof())
+	{
+		char character;				// read a character one at a time
+		//infile >> character; //reads a 
+
+		infile.get(character);  // page 358-360 getting a character at a time
+		if (infile.eof())    // stop the loop because end of file has been detected
+			break;
+		cout << character << '\n'; // display the indexes and numbers
+		                 // calculate the sum of alll numbers
+	}
+
+
+	return 0;
+}
